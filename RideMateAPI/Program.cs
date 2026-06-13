@@ -226,6 +226,17 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
+if (builder.Configuration.GetValue<bool>("ApplyMigrationsOnStartup"))
+{
+	using var scope = app.Services.CreateScope();
+	var migrationLogger = scope.ServiceProvider.GetRequiredService<ILoggerFactory>().CreateLogger("DatabaseMigration");
+	var db = scope.ServiceProvider.GetRequiredService<RideMateDbContext>();
+
+	migrationLogger.LogInformation("Applying database migrations on startup.");
+	db.Database.Migrate();
+	migrationLogger.LogInformation("Database migrations applied.");
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

@@ -9,6 +9,8 @@ services:
     envVars:
       - key: ASPNETCORE_ENVIRONMENT
         value: Production
+      - key: ApplyMigrationsOnStartup
+        value: true
       - key: RIDE_MATE_CONNECTION
         sync: false
       - key: CLOUDINARY_URL
