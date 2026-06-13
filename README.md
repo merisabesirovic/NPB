@@ -2,6 +2,9 @@
 
 RideMate je aplikacija za deljenje voznji. Vozac objavljuje redovnu ili jednokratnu voznju na odredjenoj ruti, a putnici rezervisu sedista radi podele troskova. Sistem pokriva registraciju korisnika, verifikaciju dokumenata, rezervacije, placanja, otkazivanja, recenzije, sporove, notifikacije i admin panel.
 
+##ER dijagram
+https://drive.google.com/file/d/1KcjV_5TcrCRjgpEVzZUlKvwhdVVj9Ghs/view?usp=sharing
+
 ## Funkcionalnosti
 
 - Registracija i prijava korisnika preko JWT access tokena i refresh tokena.
@@ -236,70 +239,3 @@ npm run build
 - Online placanje se radi tek nakon sto vozac odobri rezervaciju.
 - Za jednokratne voznje broj slobodnih sedista se smanjuje posle odobravanja rezervacije.
 - Za ponavljajuce voznje slobodna sedista se racunaju po datumu voznje.
-
-## ER dijagram
-
-ER dijagram treba da prikaze glavne tabele, primarne kljuceve, strane kljuceve i kardinalnosti. Predlog je da obuhvati sledece entitete:
-
-- `Users`
-- `Vehicles`
-- `DriverVerificationDocuments`
-- `Rides`
-- `RideStops`
-- `Bookings`
-- `Payments`
-- `Reviews`
-- `Disputes`
-- `SavedRoutes`
-- `Notifications`
-- `RefreshTokens`
-
-Obavezno prikazati ove veze:
-
-- `User 1 - N Vehicle`
-- `User 1 - N Ride` kao driver
-- `User 1 - N Booking` kao passenger
-- `Ride 1 - N RideStop`
-- `Ride 1 - N Booking`
-- `Booking 1 - 0..1 Payment`
-- `Booking 1 - N Review`
-- `Booking 1 - N Dispute`
-- `User 1 - N Review` kao reviewer
-- `User 1 - N Review` kao reviewed user
-- `User 1 - N DriverVerificationDocument`
-- `User 1 - N Notification`
-- `User 1 - N SavedRoute`
-- `User 1 - N RefreshToken`
-
-Na dijagramu je korisno posebno oznaciti enum polja:
-
-- `UserRole`
-- `RideType`
-- `RideStatus`
-- `RecurringType`
-- `BookingStatus`
-- `PaymentStatus`
-- `PaymentMethod`
-- `DisputeStatus`
-- `DocumentType`
-- `VerificationStatus`
-
-Za preglednost mozes grupisati dijagram u oblasti:
-
-- korisnici i verifikacije
-- voznje i rezervacije
-- placanja i refundacije
-- recenzije i sporovi
-- notifikacije i autentifikacija
-
-## Napomena za dalje unapredjenje
-
-Moguce nadogradnje:
-
-- PostGIS za precizniju geo-pretragu.
-- Real payment provider umesto mock placanja.
-- Background job za podsetnike 1h pre polaska.
-- SignalR za real-time notifikacije.
-- Detaljniji audit log za admin akcije.
-#   N P B  
- 
