@@ -226,7 +226,9 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
-if (builder.Configuration.GetValue<bool>("ApplyMigrationsOnStartup"))
+var applyMigrationsOnStartup = builder.Configuration.GetValue<bool?>("ApplyMigrationsOnStartup")
+	?? app.Environment.IsProduction();
+if (applyMigrationsOnStartup)
 {
 	using var scope = app.Services.CreateScope();
 	var migrationLogger = scope.ServiceProvider.GetRequiredService<ILoggerFactory>().CreateLogger("DatabaseMigration");
