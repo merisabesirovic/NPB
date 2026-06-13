@@ -1,8 +1,27 @@
 # RideMate
 
-RideMate je aplikacija za deljenje voznji. Vozac objavljuje redovnu ili jednokratnu voznju na odredjenoj ruti, a putnici rezervisu sedista radi podele troskova. Sistem pokriva registraciju korisnika, verifikaciju dokumenata, rezervacije, placanja, otkazivanja, recenzije, sporove, notifikacije i admin panel.
+RideMate je aplikacija za deljenje voznji. Vozac objavljuje redovnu ili jednokratnu voznju na odredjenoj ruti, a putnici rezervisu sedista radi podele troskova.
 
-##ER dijagram
+Aplikacija pokriva registraciju korisnika, verifikaciju dokumenata, rezervacije, placanja, otkazivanja, recenzije, sporove, notifikacije i admin panel.
+
+## Sadrzaj
+
+- [ER dijagram](#er-dijagram)
+- [Funkcionalnosti](#funkcionalnosti)
+- [Tehnologije](#tehnologije)
+- [Struktura projekta](#struktura-projekta)
+- [Arhitektura](#arhitektura)
+- [Custom middleware](#custom-middleware)
+- [Baza podataka](#baza-podataka)
+- [Pokretanje projekta](#pokretanje-projekta)
+- [Build](#build)
+- [Glavne API celine](#glavne-api-celine)
+- [Pravila domena](#pravila-domena)
+
+## ER dijagram
+
+ER dijagram je dostupan ovde:
+
 https://drive.google.com/file/d/1KcjV_5TcrCRjgpEVzZUlKvwhdVVj9Ghs/view?usp=sharing
 
 ## Funkcionalnosti
@@ -26,7 +45,7 @@ https://drive.google.com/file/d/1KcjV_5TcrCRjgpEVzZUlKvwhdVVj9Ghs/view?usp=shari
 
 ## Tehnologije
 
-Backend:
+### Backend
 
 - ASP.NET Core Web API
 - .NET 10
@@ -41,7 +60,7 @@ Backend:
 - JWT authentication + refresh token rotacija i revoke lista
 - Cloudinary za upload slika i dokumenata
 
-Frontend:
+### Frontend
 
 - React 18
 - TypeScript
@@ -69,7 +88,9 @@ RideMateAPI/
 
 ## Arhitektura
 
-Projekat koristi Vertical Slice pristup. Funkcionalnosti su grupisane po domenima u `Application` folderu, na primer:
+Projekat koristi Vertical Slice pristup. Funkcionalnosti su grupisane po domenima u `Application` folderu.
+
+Primeri modula:
 
 - `Application/Auth`
 - `Application/Rides`
@@ -84,13 +105,17 @@ CQRS je implementiran kroz MediatR:
 - Queries citaju podatke.
 - `ValidationBehavior` pokrece FluentValidation pre obrade requesta.
 
-Entity Framework Core `RideMateDbContext` se koristi kao Unit of Work i kao pristup repozitorijumima kroz `DbSet` kolekcije. Servisi sadrze domensku logiku koja ne pripada kontrolerima.
+Entity Framework Core `RideMateDbContext` se koristi kao Unit of Work i kao pristup repozitorijumima kroz `DbSet` kolekcije.
+
+Servisi sadrze domensku logiku koja ne pripada kontrolerima.
 
 Globalni exception handler vraca konzistentan Problem Details format greske. Serilog upisuje strukturirane logove u konzolu i fajlove u `RideMateAPI/Logs`.
 
 ## Custom middleware
 
-Implementiran je `SlowRequestMiddleware`. Middleware meri trajanje svakog HTTP zahteva i loguje warning ako zahtev traje duze od konfigurisanog praga u kodu, trenutno 1500 ms.
+Implementiran je `SlowRequestMiddleware`.
+
+Middleware meri trajanje svakog HTTP zahteva i loguje warning ako zahtev traje duze od konfigurisanog praga u kodu, trenutno 1500 ms.
 
 Log sadrzi:
 
@@ -99,11 +124,11 @@ Log sadrzi:
 - korisnika ako je autentifikovan
 - trajanje u milisekundama
 
-Middleware je postavljen nakon autentifikacije, da bi imao pristup claim-ovima korisnika.
+Middleware je postavljen nakon autentifikacije da bi imao pristup claim-ovima korisnika.
 
 ## Baza podataka
 
-Koristi se PostgreSQL. 
+Koristi se PostgreSQL.
 
 EF Core migracije su u:
 
@@ -111,7 +136,13 @@ EF Core migracije su u:
 RideMateAPI/Migrations
 ```
 
-Design-time EF konfiguracija prvo cita connection string iz env varijable `RIDE_MATE_CONNECTION`, a zatim iz `appsettings.json`.
+Design-time EF konfiguracija prvo cita connection string iz env varijable `RIDE_MATE_CONNECTION`, zatim `DATABASE_URL`, a zatim vrednost iz `appsettings.json`.
+
+U produkciji backend automatski pokrece migracije na startup-u, osim ako se eksplicitno podesi:
+
+```env
+ApplyMigrationsOnStartup=false
+```
 
 ## Pokretanje projekta
 
@@ -124,7 +155,7 @@ Design-time EF konfiguracija prvo cita connection string iz env varijable `RIDE_
 
 ### Backend konfiguracija
 
-U `RideMateAPI/.env` 
+U `RideMateAPI/.env` dodati:
 
 ```env
 CLOUDINARY_URL=cloudinary://API_KEY:API_SECRET@CLOUD_NAME
@@ -144,7 +175,6 @@ JWT vrednosti mogu se podesiti kroz `appsettings.json`, user secrets ili env var
   }
 }
 ```
-
 
 ### Migracije
 
@@ -174,7 +204,7 @@ https://localhost:7066/swagger
 
 ### Frontend konfiguracija
 
-U `frontend/.env`:
+U `frontend/.env` dodati:
 
 ```env
 VITE_BACKEND_URL=https://localhost:7066
@@ -199,17 +229,48 @@ http://localhost:5173
 
 ## Build
 
-Backend:
+### Backend
 
 ```powershell
 dotnet build RideMateAPI\RideMateAPI.csproj
 ```
 
-Frontend:
+### Frontend
 
 ```powershell
 cd frontend
 npm run build
+```
+
+## Deployment na Render
+
+Backend:
+
+- Web Service
+- Runtime: Docker
+- Root directory: repository root
+- Dockerfile path: `Dockerfile`
+
+Backend env varijable:
+
+```env
+CLOUDINARY_URL=cloudinary://API_KEY:API_SECRET@CLOUD_NAME
+FrontendUrl=https://ride-mate-frontend-5p7q.onrender.com
+RIDE_MATE_CONNECTION=postgresql://USER:PASSWORD@HOST/DATABASE
+ASPNETCORE_ENVIRONMENT=Production
+```
+
+Frontend:
+
+- Static Site
+- Root Directory: `frontend`
+- Build Command: `npm install && npm run build`
+- Publish Directory: `dist`
+
+Frontend env varijable:
+
+```env
+VITE_API_BASE_URL=https://ride-mate-api.onrender.com/api
 ```
 
 ## Glavne API celine
