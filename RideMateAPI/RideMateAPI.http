@@ -1,0 +1,6 @@
+@RideMateAPI_HostAddress = https://localhost:7066
+
+GET {{RideMateAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

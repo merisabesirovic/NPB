@@ -1,0 +1,43 @@
+# Visual Studio / Rider / IDE state
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# .NET build output
+bin/
+obj/
+TestResults/
+*.nupkg
+*.snupkg
+
+# Logs and local runtime files
+Logs/
+*.log
+buildcheck/
+
+# Local secrets / environment files
+.env
+.env.*
+!.env.example
+RideMateAPI/.env
+frontend/.env
+frontend/.env.*
+!frontend/.env.example
+
+# Node / Vite
+node_modules/
+dist/
+.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS files
+Thumbs.db
+Desktop.ini
+.DS_Store

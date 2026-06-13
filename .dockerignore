@@ -1,0 +1,15 @@
+**/bin/
+**/obj/
+**/node_modules/
+**/dist/
+**/.vite/
+**/.vs/
+**/.idea/
+**/.vscode/
+**/Logs/
+**/*.user
+**/*.suo
+**/.env
+.git/
+.gitignore
+README.md

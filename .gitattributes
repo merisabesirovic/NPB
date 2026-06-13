@@ -1,0 +1,23 @@
+* text=auto
+
+*.cs text
+*.csproj text
+*.slnx text
+*.json text
+*.yaml text eol=lf
+*.yml text eol=lf
+*.md text
+*.ts text
+*.tsx text
+*.js text
+*.jsx text
+*.css text
+*.html text
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.pdf binary

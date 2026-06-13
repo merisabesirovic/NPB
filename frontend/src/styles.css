@@ -1,0 +1,253 @@
+:root {
+  color-scheme: light;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #f4f6f8;
+}
+
+.app-shell {
+  min-height: 100vh;
+}
+
+.topbar {
+  background: #102030;
+  color: #fff;
+  border-bottom: 4px solid #1b998b;
+}
+
+.brand-mark {
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #1b998b;
+  color: #fff;
+  font-weight: 700;
+}
+
+.profile-avatar {
+  display: block;
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #e9eef4;
+}
+
+.content-wrap {
+  width: min(1440px, calc(100vw - 24px));
+  margin: 0 auto;
+  padding: 24px 0 48px;
+}
+
+.auth-wrap {
+  width: min(1180px, calc(100vw - 24px));
+  margin: 0 auto;
+  padding: 32px 0 48px;
+}
+
+.auth-panel {
+  width: min(460px, 100%);
+  margin: 0 auto;
+}
+
+.auth-panel-wide {
+  width: min(880px, 100%);
+  margin: 0 auto;
+}
+
+.page-card {
+  background: #fff;
+  border: 1px solid #d9e1e8;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(16, 32, 48, 0.04);
+}
+
+.approval-banner {
+  border-radius: 8px;
+}
+
+.highlight-card {
+  border-color: #1b998b;
+  box-shadow: 0 0 0 4px rgba(27, 153, 139, 0.18);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.stat {
+  border: 1px solid #d9e1e8;
+  border-radius: 8px;
+  padding: 12px;
+  background: #fbfcfd;
+}
+
+.stat-label {
+  color: #5d6b78;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+}
+
+.stat-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.nav-pills .nav-link {
+  border-radius: 6px;
+  color: #283745;
+}
+
+.nav-pills .nav-link.active {
+  background: #1b998b;
+}
+
+.table-fixed {
+  table-layout: fixed;
+}
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ride-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: 16px;
+}
+
+.booking-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 16px;
+}
+
+.small-muted {
+  color: #657381;
+  font-size: 0.88rem;
+}
+
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.15rem 0.55rem;
+  background: #e9eef4;
+  color: #24323f;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.status-chip.success {
+  background: #d9f4ea;
+  color: #0b604f;
+}
+
+.status-chip.warn {
+  background: #fff2cc;
+  color: #7a5400;
+}
+
+.status-chip.danger {
+  background: #ffe0df;
+  color: #8a1f17;
+}
+
+.pre-wrap {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.form-hint {
+  color: #657381;
+  font-size: 0.82rem;
+}
+
+.driver-doc-link {
+  max-width: 260px;
+}
+
+.profile-link {
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.profile-link:hover {
+  text-decoration: underline;
+}
+
+.profile-name-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.verification-badge {
+  display: inline-flex;
+  width: 16px;
+  height: 16px;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #198754;
+  vertical-align: -2px;
+}
+
+.verification-badge::before {
+  content: "";
+  width: 5px;
+  height: 8px;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(45deg) translate(-1px, -1px);
+}
+
+.fw-bold > .verification-badge,
+.fw-semibold > .verification-badge {
+  margin-left: 0.35rem;
+}
+
+.modal-backdrop-lite {
+  position: fixed;
+  inset: 0;
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(16, 32, 48, 0.45);
+}
+
+.profile-modal {
+  width: min(560px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+  overflow: auto;
+}
+
+@media (max-width: 768px) {
+  .content-wrap,
+  .auth-wrap {
+    width: min(100vw - 16px, 100%);
+    padding-top: 12px;
+  }
+
+  .topbar .container-fluid {
+    align-items: flex-start !important;
+  }
+}
